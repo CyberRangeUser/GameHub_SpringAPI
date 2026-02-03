@@ -23,4 +23,3 @@ public class EstadisticasJuegoDTO {
     public double getPromedioJugadoresPorPartida() { return promedioJugadoresPorPartida; }
     public void setPromedioJugadoresPorPartida(double promedioJugadoresPorPartida) { this.promedioJugadoresPorPartida = promedioJugadoresPorPartida; }
 }
-

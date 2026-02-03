@@ -5,28 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Entity // Entidad Jugador
-@Table(name = "jugador") // Especifica el nombre de la tabla física
+// Entidad Jugador
+@Entity
 public class Jugador {
 
-    @Id // Marca este campo como la clave primaria (Primary Key)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Indica que el ID es autoincremental
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
     private String email;
 
-
-    /**
-     * Relación de Uno a Muchos con la entidad intermedia JugadorPartida.
-     * Representa la participación del jugador en múltiples partidas (Relación M:N).
-     * * @JsonIgnore: Evita bucles infinitos al serializar a JSON (Recursión infinita).
-     * mappedBy: Indica que el campo "jugador" en JugadorPartida es el dueño de la relación.
-     * cascade: Si se elimina el jugador, se gestionan sus registros relacionados según la lógica de negocio.
-     */
-    
-    @JsonIgnore 
+    // Relación M:N con Partida a través de JugadorPartida
+    @JsonIgnore
     @OneToMany(mappedBy = "jugador", cascade = CascadeType.ALL)
     private Set<JugadorPartida> partidas = new HashSet<>();
 

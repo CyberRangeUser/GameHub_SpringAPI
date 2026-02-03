@@ -1,4 +1,3 @@
-// Tabla intermedia entre Jugador y Partida (M:N)
 package com.example.demo.model;
 
 import jakarta.persistence.*;
