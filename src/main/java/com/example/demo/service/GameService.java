@@ -11,31 +11,31 @@ import java.util.stream.Collectors;
 @Service
 public class GameService {
 
-    private final JugadorRepository jugadorRepo;
-    private final PartidaRepository partidaRepo;
-    private final JugadorPartidaRepository jpRepo;
+    private final JugadorRepository jugadorRepo; // Repositorio de jugadores
+    private final PartidaRepository partidaRepo; // Repositorio de partidas
+    private final JugadorPartidaRepository jpRepo; // Repositorio de relación jugador-partida
 
     public GameService(JugadorRepository j, PartidaRepository p, JugadorPartidaRepository jp) {
         this.jugadorRepo = j;
         this.partidaRepo = p;
         this.jpRepo = jp;
-    }
+    } // Inyección de dependencias de los repositorios
 
     // Crear una partida
     public void crear(PartidaDTO dto) {
-        Partida partida = new Partida();
-        partida.setDuracion(dto.getDuracion());
-        partidaRepo.save(partida);
+        Partida partida = new Partida(); // Nueva instancia de partida
+        partida.setDuracion(dto.getDuracion()); // Establecer duración de la partida
+        partidaRepo.save(partida); // Guardar la partida
 
         for (int i = 0; i < dto.getJugadorIds().size(); i++) {
-            Jugador jugador = jugadorRepo.findById(dto.getJugadorIds().get(i))
+            Jugador jugador = jugadorRepo.findById(dto.getJugadorIds().get(i)) // Buscar jugador por ID
                     .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
-            JugadorPartida jp = new JugadorPartida();
+            JugadorPartida jp = new JugadorPartida(); // Nueva instancia de relación jugador-partida
             jp.setJugador(jugador);
             jp.setPartida(partida);
             jp.setScore(dto.getScores().get(i));
             jpRepo.save(jp);
-        }
+        } // Asociar jugadores a la partida con sus scores
     }
 
     // Leer todas las partidas
